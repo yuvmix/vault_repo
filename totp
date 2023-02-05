@@ -1,0 +1,8 @@
+step 1 : generate data for barcode
+vault write --field=barcode totp/keys/<key_path> generate=true issuer=<issuer>(probably vault) account_name=<account_name>
+
+step 2 : decode the data and store it to an image file 
+cat decode | base64 -d > totp.png/jpg/jpeg
+
+step 3 : scan code with authenticator & verify
+vault read totp/code/<key_path>
