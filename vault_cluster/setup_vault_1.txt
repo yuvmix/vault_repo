@@ -1,0 +1,15 @@
+# initializing vault_1
+
+VAULT_TOKEN=$VAULT_TOKEN VAULT_API_ADDR=$VAULT_ADDR vault server -log-level=trace -config "config_vault_1.hcl" > "vault_1.log" 2>&1 &
+
+INIT_RESPONSE=$(vault_1 operator init -format=json -key-shares 1 -key-threshold 1)
+
+  UNSEAL_KEY=$(echo "$INIT_RESPONSE" | jq -r .unseal_keys_b64[0])
+  VAULT_TOKEN=$(echo "$INIT_RESPONSE" | jq -r .root_token)
+
+  vault_1 operator unseal "$UNSEAL_KEY"
+  vault_1 login "$VAULT_TOKEN"
+
+  vault_1 secrets enable transit
+  vault_1 write -f transit/keys/unseal_key
+
