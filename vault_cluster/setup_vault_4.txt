@@ -1,0 +1,1 @@
+VAULT_TOKEN=$VAULT_TOKEN VAULT_API_ADDR=$VAULT_ADDR vault server -log-level=trace -config "config_vault_4.hcl" > "vault_4.log" 2>&1 &

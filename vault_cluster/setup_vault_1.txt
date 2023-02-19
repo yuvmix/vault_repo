@@ -2,6 +2,10 @@
 
 VAULT_TOKEN=$VAULT_TOKEN VAULT_API_ADDR=$VAULT_ADDR vault server -log-level=trace -config "config_vault_1.hcl" > "vault_1.log" 2>&1 &
 
+vault_1 {
+  (export VAULT_ADDR=http://10.92.1.71:8200 && vault "$@")
+}
+
 INIT_RESPONSE=$(vault_1 operator init -format=json -key-shares 1 -key-threshold 1)
 
   UNSEAL_KEY=$(echo "$INIT_RESPONSE" | jq -r .unseal_keys_b64[0])

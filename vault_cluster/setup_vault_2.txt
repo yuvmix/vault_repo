@@ -1,0 +1,20 @@
+VAULT_TOKEN=$VAULT_TOKEN VAULT_API_ADDR=$VAULT_ADDR vault server -log-level=trace -config "config_vault_2.hcl" > "vault_2.log" 2>&1 &
+
+vault_2 {
+  (export VAULT_ADDR=http://10.92.1.72:8200 && vault "$@")
+}
+
+INIT_RESPONSE=$(vault_2 operator init -format=json -recovery-shares 1 -recovery-threshold 1)
+
+  UNSEAL_KEY=$(echo "$INIT_RESPONSE" | jq -r .unseal_keys_b64[0])
+  VAULT_TOKEN=$(echo "$INIT_RESPONSE" | jq -r .root_token)
+  
+  echo "$RECOVERY_KEY2" > recovery_key_vault_2.txt
+  echo "$VAULT_TOKEN2" > root_token_vault_2.txt
+
+  vault_2 login "$VAULT_TOKEN2"
+
+  vault_2 secrets enable -path=kv kv-v2
+
+  vault_2 kv put kv/apikey webapp=ABB39KKPTWOR832JGNLS02
+  vault_2 kv get kv/apikey
