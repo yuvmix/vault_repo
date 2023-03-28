@@ -7,6 +7,7 @@ vault operator init
 
 ### use those environment variables
 export VAULT_TOKEN=""
+
 export VAULT_ADDR="<IP>:8200"
 
 ### add the unseal keys
@@ -32,14 +33,18 @@ vault write transit/encrypt/my-key plaintext=$(echo "my secret data" | base64) #
 
 ### running the other servers at the cluster
 vault server -config <config_file>
+
 export VAULT_ADDR="<IP>:8200"
 
 ### only for one of the servers needs to be initiated and unseal by hand to have the root token and seal keyies
 vault operator init --secret_shares=<number_of_unsealkeyies> --secret_threshold=<number_of_unseal_keyies>
+
 vault operator unsael <unseal_key>
+
 export VAULT_TOKEN=""
 
 ### than check that the cluster is up and running
 vault operator raft list-peers
+
 vault monitor
 
