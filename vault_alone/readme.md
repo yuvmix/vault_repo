@@ -1,9 +1,11 @@
+#startin with the first vualt server which will auto-seal the vault cluster
 vault server -config vault.hcl
 
 vault operator init
 
 # save creds
 
+# use those environment variables
 export VAULT_TOKEN=""
 export VAULT_ADDR="<IP>:8200"
 
@@ -21,10 +23,11 @@ vault secrets enable transit
 
 # create the transit key for auto-unseal
 vault write -f transit/keys/<name_of_key>
-# vault write transit/encrypt/my-key plaintext=$(echo "my secret data" | base64)
+
+vault write transit/encrypt/my-key plaintext=$(echo "my secret data" | base64) #can be used
 
 
-# after the creation of the transit key we can start with the creation of the other vault instances
+## after the creation of the transit key we can start with the creation of the other vault instances
 
 
 # running the other servers at the cluster
