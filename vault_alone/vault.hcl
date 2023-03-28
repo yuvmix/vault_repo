@@ -3,6 +3,23 @@ api_addr = "http://10.92.1.72:8200"
 cluster_addr = "http://10.92.1.72:8201"
 log_requests_level = "trace"
 
+license_path = "/path/to/license"
+default_lease_ttl = "1h"
+max_lease_ttl = "24h"
+pid_file = "/path/to/file"
+enable_response_header_hostname = true
+enableresponse_header_raft_node_id = true
+log_level = "trace"
+log_format = "json"
+cluster_name = "joshuah"
+
+# disable_mlock = true
+# disable_cache = true
+# plugin_directory = "/path/to/dir"
+# telemetry {}
+# detect_deadlocks = "statelock"
+# disable_performance_standby = true
+
 listener "tcp" {
     address = "10.92.1.72:8200"
     tls_disable = "true"
