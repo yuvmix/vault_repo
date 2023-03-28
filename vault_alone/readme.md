@@ -1,4 +1,4 @@
-#startin with the first vualt server which will auto-seal the vault cluster
+# startin with the first vualt server which will auto-seal the vault cluster
 vault server -config vault.hcl
 
 vault operator init
