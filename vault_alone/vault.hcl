@@ -29,7 +29,7 @@ storage "raft" {
   }
 
   retry_join {
-    leader_api_addr = "http://10.92.1.73:8200"
+    leader_api_addr = "http://10.92.1.74:8200"
   }
 
   retry_join {
