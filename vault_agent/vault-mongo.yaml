@@ -10,8 +10,8 @@ metadata:
     vault.hashicorp.com/agent-inject-secret-.env: 'internal/data/database/config'
     vault.hashicorp.com/agent-inject-.env: |
       {{- with secret "internal/data/database/config" -}}
-      username:  {{ .Data.username }}
-      password:  {{ .Data.password }}
+      DB_USERNAME={{ .Data.username }}
+      DB_PASSWORD={{ .Data.password }}
       {{- end -}}
 spec:
   serviceAccountName: internal-app
