@@ -17,4 +17,4 @@ spec:
   serviceAccountName: internal-app
   containers:
     - name: vault_mongo
-      image: vault_mongo:image
+      image: yuvalammatrix/vault_mongo:image
