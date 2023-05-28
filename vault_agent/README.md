@@ -92,10 +92,10 @@ vault write auth/kubernetes/config \\\
     kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443"
   
 ## add policy 
-vault policy write vault-sa -<<EOF \n
-path "database/creds/admin" { \n
-  capabilities = [ "read" ] \n
-} \n
+vault policy write vault-sa -<<EOF \
+path "database/creds/admin" { \
+  capabilities = [ "read" ] \
+} \
 EOF
 
 ## create kubernetes authentication role
