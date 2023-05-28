@@ -8,6 +8,7 @@ metadata:
     vault.hashicorp.com/agent-inject: 'true'
     vault.hashicorp.com/role: 'vault-sa'
     vault.hashicorp.com/agent-inject-secret-.env: 'database/creds/admin'
+    vault.hashicorp.com/secret-volume-path-app:
     vault.hashicorp.com/agent-inject-template-.env: |
       {{- with secret "database/creds/admin" -}}
       DB_USERNAME={{ .Data.username }}
