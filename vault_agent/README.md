@@ -113,8 +113,3 @@ kubectl create sa vault-sa
                                    
 # crete the application pod
 kubectl apply -f vault-mongo.yaml
-                                   
-## check vualt-agent logs                                   
-kubectl logs \\\
-    $(kubectl get pod -l app=database-mongodb -o jsonpath="{.items[0].metadata.name}") \\\
-    --container vault-agent
