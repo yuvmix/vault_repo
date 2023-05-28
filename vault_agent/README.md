@@ -31,10 +31,20 @@ git clone https://github.com/raakatz/vault-mongodb.git
 minikube start
 
 ## create the mongodb pod 
-kubectl run   --port 27017 --port 28017  --image=yuvalammatrix/mongo:latest --env=MONGO_INITDB_ROOT_USERNAME="mdbadmin" --env=MONGO_INITDB_ROOT_PASSWORD="hQ97T9JJKZoqnFn2NXE" --env=MONGO_INITDB_DATABASE="database-mongodb"  -l='app=database-mongodb' database-mongodb
+kubectl run   /\
+    --port 27017 /\
+    --port 28017  \
+    --image=yuvalammatrix/mongo:latest \
+    --env=MONGO_INITDB_ROOT_USERNAME="mdbadmin" \
+    --env=MONGO_INITDB_ROOT_PASSWORD="hQ97T9JJKZoqnFn2NXE" \
+    --env=MONGO_INITDB_DATABASE="database-mongodb"  \
+    -l='app=database-mongodb' \
+    database-mongodb
 
 ## create mongodb service
-kubectl create service nodeport database-mongodb --tcp 27017:27017  -o yaml | kubectl set selector --local -f - app=mongo -o yaml
+kubectl create service nodeport database-mongodb \
+--tcp 27017:27017  -o yaml \
+| kubectl set selector --local -f - app=mongo -o yaml
 
 
 
