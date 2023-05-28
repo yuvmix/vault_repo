@@ -32,18 +32,18 @@ minikube start
 
 ## create the mongodb pod 
 kubectl run   \\\
-    --port 27017 \\
-    --port 28017  \
-    --image=yuvalammatrix/mongo:latest \
-    --env=MONGO_INITDB_ROOT_USERNAME="mdbadmin" \
-    --env=MONGO_INITDB_ROOT_PASSWORD="hQ97T9JJKZoqnFn2NXE" \
-    --env=MONGO_INITDB_DATABASE="database-mongodb"  \
-    -l='app=database-mongodb' \
+    --port 27017 \\\
+    --port 28017  \\\
+    --image=yuvalammatrix/mongo:latest \\\
+    --env=MONGO_INITDB_ROOT_USERNAME="mdbadmin" \\\
+    --env=MONGO_INITDB_ROOT_PASSWORD="hQ97T9JJKZoqnFn2NXE" \\\
+    --env=MONGO_INITDB_DATABASE="database-mongodb"  \\\
+    -l='app=database-mongodb' \\\
     database-mongodb
 
 ## create mongodb service
-kubectl create service nodeport database-mongodb \
---tcp 27017:27017  -o yaml \
+kubectl create service nodeport database-mongodb \\\
+--tcp 27017:27017  -o yaml \\\
 | kubectl set selector --local -f - app=mongo -o yaml
 
 
@@ -67,18 +67,18 @@ kubectl exec -it vault-0 -- /bin/sh
 vault secrets enable database
 
 ## configure mongodb secret engine
-vault write database/config/database-mongodb \
-    plugin_name=mongodb-database-plugin \
-    allowed_roles="admin" \
-    connection_url="mongodb://{{username}}:{{password}}@database-mongodb:27017/admin?tls=false" \
-    username="mdbadmin" \
+vault write database/config/database-mongodb \\\
+    plugin_name=mongodb-database-plugin \\\
+    allowed_roles="admin" \\\
+    connection_url="mongodb://{{username}}:{{password}}@database-mongodb:27017/admin?tls=false" \\\
+    username="mdbadmin" \\\
     password="hQ97T9JJKZoqnFn2NXE"
 
 ## create role for mongodb
-vault write database/roles/admin \
-    db_name=database-mongodb \
-    creation_statements='{ "db": "admin", "roles": [{ "role": "readWrite" }, {"role": "read", "db": "foo"}] }' \
-    default_ttl="1h" \
+vault write database/roles/admin \\\
+    db_name=database-mongodb \\\
+    creation_statements='{ "db": "admin", "roles": [{ "role": "readWrite" }, {"role": "read", "db": "foo"}] }' \\\
+    default_ttl="1h" \\\
     max_ttl="24h"
     
    
@@ -88,7 +88,7 @@ vault write database/roles/admin \
 vault auth enable kubernetes
 
 ## bound to port of minikube
-vault write auth/kubernetes/config \
+vault write auth/kubernetes/config \\\
     kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443"
   
 ## add policy 
@@ -100,10 +100,10 @@ path "database/creds/admin" {
 EOF
 
 ## create kubernetes authentication role
-vault write auth/kubernetes/role/vault-sa \
-    bound_service_account_names=vault-sa \
-    bound_service_account_namespaces=default \
-    policies=vault-sa \
+vault write auth/kubernetes/role/vault-sa \\\
+    bound_service_account_names=vault-sa \\\
+    bound_service_account_namespaces=default \\\
+    policies=vault-sa \\\
     ttl=24h
 
 ## create the service acount
@@ -115,6 +115,6 @@ kubectl create sa vault-sa
 kubectl apply -f vault-mongo.yaml
                                    
 ## check vualt-agent logs                                   
-kubectl logs \
-    $(kubectl get pod -l app=database-mongodb -o jsonpath="{.items[0].metadata.name}") \
+kubectl logs \\\
+    $(kubectl get pod -l app=database-mongodb -o jsonpath="{.items[0].metadata.name}") \\\
     --container vault-agent
