@@ -93,7 +93,6 @@ vault write auth/kubernetes/config \\\
   
 ## add policy 
 vault policy write vault-sa -<<EOF
-## Required: Get credentials from the database secrets engine for 'admin' role.
 path "database/creds/admin" {
   capabilities = [ "read" ]
 }
