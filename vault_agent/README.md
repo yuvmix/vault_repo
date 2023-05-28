@@ -31,8 +31,8 @@ git clone https://github.com/raakatz/vault-mongodb.git
 minikube start
 
 ## create the mongodb pod 
-kubectl run   /\
-    --port 27017 /\
+kubectl run   \\
+    --port 27017 \\
     --port 28017  \
     --image=yuvalammatrix/mongo:latest \
     --env=MONGO_INITDB_ROOT_USERNAME="mdbadmin" \
