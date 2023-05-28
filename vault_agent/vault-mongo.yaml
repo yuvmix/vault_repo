@@ -12,6 +12,7 @@ metadata:
       {{- with secret "database/creds/admin" -}}
       DB_USERNAME={{ .Data.username }}
       DB_PASSWORD={{ .Data.password }}
+      
       {{- end -}}
 spec:
   serviceAccountName: vault-sa
