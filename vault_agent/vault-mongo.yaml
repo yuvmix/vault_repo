@@ -6,15 +6,15 @@ metadata:
     app: vault-mongo
   annotations:
     vault.hashicorp.com/agent-inject: 'true'
-    vault.hashicorp.com/role: 'internal-app'
-    vault.hashicorp.com/agent-inject-secret-.env: 'internal/data/database/config'
+    vault.hashicorp.com/role: 'vault-sa'
+    vault.hashicorp.com/agent-inject-secret-.env: 'database/creds/admin'
     vault.hashicorp.com/agent-inject-.env: |
-      {{- with secret "internal/data/database/config" -}}
+      {{- with secret "database/creds/admin" -}}
       DB_USERNAME={{ .Data.username }}
       DB_PASSWORD={{ .Data.password }}
       {{- end -}}
 spec:
-  serviceAccountName: internal-app
+  serviceAccountName: vault-sa
   containers:
     - name: vault-mongo
       image: yuvalammatrix/vault_mongo:image
