@@ -24,6 +24,9 @@ kubectl version --client
 ## clone that repo and build the image in it
 git clone https://github.com/raakatz/vault-mongodb.git
 
+
+
+# deploying mongodb 
 ## start the minikube
 minikube start
 
@@ -34,7 +37,9 @@ kubectl run   --port 27017 --port 28017  --image=yuvalammatrix/mongo:latest --en
 kubectl create service nodeport database-mongodb --tcp 27017:27017  -o yaml | kubectl set selector --local -f - app=mongo -o yaml
 
 
-# get, update and install this helm chart
+
+# deploying vault and vault-agent-injector
+## get, update and install this helm chart
 helm repo add hashicorp https://helm.releases.hashicorp.com
 helm repo update
 helm install vault hashicorp/vault --set "server.dev.enabled=true"
@@ -43,10 +48,10 @@ helm install vault hashicorp/vault --set "server.dev.enabled=true"
 kubectl get pods
 
 
+
 # create your secret in vault
 ## enter the container vault-0
 kubectl exec -it vault-0 -- /bin/sh
-
 
 ## vault secrets enable database
 vault secrets enable database
@@ -66,8 +71,9 @@ vault write database/roles/admin \
     default_ttl="1h" \
     max_ttl="24h"
     
-    
-# configure kubernetes authentication
+   
+   
+# configure kubernetes authentication in vault
 ## enable kubernetes auth
 vault auth enable kubernetes
 
@@ -94,6 +100,7 @@ vault write auth/kubernetes/role/vault-sa \
 kubectl create sa vault-sa
                                    
 
+                                   
 # crete the application pod
 kubectl apply -f vault-mongo.yaml
                                    
