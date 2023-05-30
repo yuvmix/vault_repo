@@ -4,7 +4,7 @@ get docker, minikube, helm, kubectl
 ## docker
 curl -fsSL https://get.docker.com -o get-docker.sh \
 sudo sh get-docker.sh \
-sudo usermod -aG docker $USER && newgrp docker \
+sudo usermod -aG docker $USER && newgrp docker 
 
 ## minikube
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
