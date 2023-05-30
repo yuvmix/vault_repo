@@ -2,24 +2,24 @@
 get docker, minikube, helm, kubectl
 
 ## docker
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-sudo usermod -aG docker $USER && newgrp docker
+curl -fsSL https://get.docker.com -o get-docker.sh \
+sudo sh get-docker.sh \
+sudo usermod -aG docker $USER && newgrp docker \
 
 ## minikube
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
 ## helm
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-chmod 700 get_helm.sh
-./get_helm.sh
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 \
+chmod 700 get_helm.sh \
+./get_helm.sh 
 
 ## kubectl
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-chmod +x ./kubectl
-sudo mv ./kubectl /usr/local/bin/kubectl
-kubectl version --client
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+chmod +x ./kubectl \
+sudo mv ./kubectl /usr/local/bin/kubectl \
+kubectl version --client 
 
 ## clone that repo and build the image in it
 git clone https://github.com/raakatz/vault-mongodb.git
